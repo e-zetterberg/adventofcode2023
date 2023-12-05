@@ -1,13 +1,12 @@
 package day1;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import common.SantasLittleHelper;
 
 public class Trebuchet {
 
@@ -15,11 +14,11 @@ public class Trebuchet {
 
     public static void main(String[] args) {
         String path = "src/main/java/day1/input.txt";
-        int firstSum = 0;
-        int secondSum = 0;
+        int firstSum;
+        int secondSum;
 
         //Part 1
-        try (BufferedReader reader = getFileAsBufferedReader(path)) {
+        try (BufferedReader reader = SantasLittleHelper.getFileAsBufferedReader(path)) {
             firstSum = reader.lines()
                     .map(Trebuchet::wipeOffNonDigits)
                     .mapToInt(Trebuchet::firstAndLastDigit)
@@ -29,7 +28,7 @@ public class Trebuchet {
         }
 
         //Part 2
-        try (BufferedReader reader = getFileAsBufferedReader(path)) {
+        try (BufferedReader reader = SantasLittleHelper.getFileAsBufferedReader(path)) {
             secondSum = reader.lines()
                     .map(Trebuchet::prepareString)
                     .map(Trebuchet::wipeOffNonDigits)
@@ -117,14 +116,4 @@ public class Trebuchet {
         return digitMap;
     }
 
-
-    private static BufferedReader getFileAsBufferedReader(String path) {
-        BufferedReader reader;
-        try {
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return reader;
-    }
 }
