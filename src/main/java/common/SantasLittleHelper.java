@@ -1,9 +1,8 @@
 package common;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class SantasLittleHelper {
 
@@ -15,6 +14,11 @@ public class SantasLittleHelper {
             throw new RuntimeException(e);
         }
         return reader;
+    }
+    public static List<String> getFileAsList(String path) throws IOException {
+        try (BufferedReader reader = getFileAsBufferedReader(path)) {
+            return reader.lines().toList();
+        }
     }
 
 }

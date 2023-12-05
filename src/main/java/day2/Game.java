@@ -14,22 +14,55 @@ public class Game {
         this.mostBlueCubesShown = mostBlueCubesShown;
     }
 
-    public Game parseGame(String input) {
+    public int getPower() {
+        return mostBlueCubesShown * mostGreenCubesShown * mostRedCubesShown;
+    }
+
+    public static Game parseGame(String input) {
         System.out.println("Parsing game from string: " + input);
         //String manipulation magic
         int colonIndex = input.indexOf(":");
-        int gameID = Integer.parseInt(input.substring(6, colonIndex));
+        int gameID = Integer.parseInt(input.substring(5, colonIndex));
         String[] cubeSets = input.substring(colonIndex + 1).split(";");
+        int maxRedCubes = 0, maxBlueCubes = 0, maxGreenCubes = 0;
         for (String cubeSet : cubeSets) {
-
+            System.out.println(cubeSet);
+            maxRedCubes = getMaxCubes(maxRedCubes, cubeSet, "red");
+            maxBlueCubes = getMaxCubes(maxBlueCubes, cubeSet, "blue");
+            maxGreenCubes = getMaxCubes(maxGreenCubes, cubeSet, "green");
         }
-        return new Game(gameID, );
+        System.out.println("min blue " + maxBlueCubes);
+        System.out.println("min green " + maxGreenCubes);
+        System.out.println("min red " + maxRedCubes);
+        return new Game(gameID, maxRedCubes, maxGreenCubes, maxBlueCubes);
     }
 
-    public boolean isPossible(int redLimit, int greenLimit, int blueLimit) {
-        return mostRedCubesShown > redLimit || mostGreenCubesShown > greenLimit || mostBlueCubesShown > blueLimit;
+    private static int getMaxCubes(int currentMax, String cubeSet, String color) {
+        int index = cubeSet.indexOf(color);
+        int maxCubes = currentMax;
+        if (index > 2) {
+            String subString = cubeSet.substring(index - 3, index);
+            String cleanedSubString = subString.replaceAll("\\D", "");
+            int amount = Integer.parseInt(cleanedSubString);
+            if (amount > currentMax) {
+
+               maxCubes = amount;
+            }
+        }
+        return maxCubes;
     }
 
+    public int getMostRedCubesShown() {
+        return mostRedCubesShown;
+    }
+
+    public int getMostGreenCubesShown() {
+        return mostGreenCubesShown;
+    }
+
+    public int getMostBlueCubesShown() {
+        return mostBlueCubesShown;
+    }
 
     public int getGameID() {
         return gameID;
