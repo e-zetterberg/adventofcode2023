@@ -2,6 +2,7 @@ package day1;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -17,34 +18,44 @@ public class Trebuchet {
         int firstSum;
         int secondSum;
 
+        long performancePart1;
+        long performancePart2;
+
         //Part 1
+        long startTime = Instant.now().toEpochMilli();
         try (BufferedReader reader = SantasLittleHelper.getFileAsBufferedReader(path)) {
             firstSum = reader.lines()
                     .map(Trebuchet::wipeOffNonDigits)
                     .mapToInt(Trebuchet::firstAndLastDigit)
                     .sum();
+            performancePart1 = Instant.now().toEpochMilli() - startTime;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         //Part 2
+        startTime = Instant.now().toEpochMilli();
         try (BufferedReader reader = SantasLittleHelper.getFileAsBufferedReader(path)) {
             secondSum = reader.lines()
                     .map(Trebuchet::prepareString)
                     .map(Trebuchet::wipeOffNonDigits)
                     .mapToInt(Trebuchet::firstAndLastDigit)
                     .sum();
+            performancePart2 = Instant.now().toEpochMilli() - startTime;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.printf("%n The first sum is %s", firstSum);
-        System.out.printf("%n The second sum is %s", secondSum);
+
+        System.out.println("Calculated first sum in " + performancePart1 + " ms");
+        System.out.printf("The first sum is %s %n", firstSum);
+        System.out.println("Calculated second sum in " + performancePart2 + " ms");
+        System.out.printf("The second sum is %s %n", secondSum);
 
     }
 
     private static String wipeOffNonDigits(String input) {
         System.out.println("Trebuchet.wipeOffNonDigits");
-        System.out.print("input = " + input);
+        System.out.println("input = " + input);
         return input.replaceAll("\\D", "");
     }
 
