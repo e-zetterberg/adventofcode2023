@@ -2,10 +2,10 @@ package day2;
 
 public class Game {
 
-    private int gameID;
-    private int mostRedCubesShown;
-    private int mostGreenCubesShown;
-    private int mostBlueCubesShown;
+    private final int gameID;
+    private final int mostRedCubesShown;
+    private final int mostGreenCubesShown;
+    private final int mostBlueCubesShown;
 
     public Game(int ID, int mostRedCubesShown, int mostGreenCubesShown, int mostBlueCubesShown) {
         this.gameID = ID;
@@ -24,7 +24,9 @@ public class Game {
         int colonIndex = input.indexOf(":");
         int gameID = Integer.parseInt(input.substring(5, colonIndex));
         String[] cubeSets = input.substring(colonIndex + 1).split(";");
-        int maxRedCubes = 0, maxBlueCubes = 0, maxGreenCubes = 0;
+        int maxRedCubes = 0;
+        int maxBlueCubes = 0;
+        int maxGreenCubes = 0;
         for (String cubeSet : cubeSets) {
             System.out.println(cubeSet);
             maxRedCubes = getMaxCubes(maxRedCubes, cubeSet, "red");

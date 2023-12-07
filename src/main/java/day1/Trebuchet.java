@@ -54,7 +54,6 @@ public class Trebuchet {
     }
 
     private static String wipeOffNonDigits(String input) {
-        System.out.println("Trebuchet.wipeOffNonDigits");
         System.out.println("input = " + input);
         return input.replaceAll("\\D", "");
     }
